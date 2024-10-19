@@ -28,6 +28,7 @@
         }
         .button-container {
             display: flex;
+            flex-direction: column; /* Alterado para coluna */
             justify-content: center;
             margin: 20px 0;
         }
@@ -38,9 +39,10 @@
             border-radius: 5px;
             padding: 10px 20px;
             cursor: pointer;
-            margin: 0 10px;
+            margin: 10px 0; /* Alterado para ter margens verticais */
             font-size: 1rem;
             transition: background-color 0.3s;
+            width: 200px; /* Ajusta a largura para ficarem alinhados */
         }
         button:hover {
             background-color: #1aa34a;
