@@ -29,7 +29,6 @@
         .button-container {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap; /* Permitir que os botões quebrem para a linha abaixo */
             margin: 20px 0;
         }
         button {
@@ -39,10 +38,9 @@
             border-radius: 5px;
             padding: 10px 20px;
             cursor: pointer;
-            margin: 5px; /* Margem mais suave entre os botões */
+            margin: 0 10px;
             font-size: 1rem;
             transition: background-color 0.3s;
-            min-width: 150px; /* Definir uma largura mínima para os botões */
         }
         button:hover {
             background-color: #1aa34a;
@@ -97,11 +95,13 @@
     <button id="load-new-releases">Novos Lançamentos</button>
     <button id="load-top-brazil">Top 50 Brasil</button>
     <button id="load-top-portugal">Top 50 Portugal</button>
+    <button id="load-discover-playlist">Playlist do Discover</button> <!-- Novo botão para a playlist -->
 </div>
 
 <div class="release-container" id="new-releases"></div>
 <div class="release-container" id="top-songs-brazil"></div>
 <div class="release-container" id="top-songs-portugal"></div>
+<div class="release-container" id="discover-playlist"></div> <!-- Container para a playlist -->
 
 <footer>
     <p>&copy; 2024 Discover Music. Todos os direitos reservados.</p>
@@ -191,6 +191,11 @@
         toggleVisibility(container);
     }
 
+    async function displayDiscoverPlaylist() {
+        const playlistId = '4NyWA37SoQyawqgL13jC9'; // ID da sua playlist
+        await displayTopSongs(playlistId, 'discover-playlist', 'Playlist do Discover'); // Chamando a função com o ID da sua playlist
+    }
+
     function toggleVisibility(container) {
         const containers = document.querySelectorAll('.release-container');
         containers.forEach(c => {
@@ -211,6 +216,10 @@
     
     document.getElementById('load-top-portugal').addEventListener('click', async () => {
         await displayTopSongs('37i9dQZEVXbKyJS56d1pgi', 'top-songs-portugal', 'Top 50 Músicas - Portugal'); // ID da playlist do Spotify para Portugal
+    });
+
+    document.getElementById('load-discover-playlist').addEventListener('click', async () => {
+        await displayDiscoverPlaylist(); // Chama a função para exibir a playlist do Discover
     });
 
     displayNewReleases(); // Carregar novos lançamentos ao iniciar
