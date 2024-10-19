@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Music - Novos Lançamentos</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            width: 100%;
+            padding: 20px;
+            background-color: #1DB954;
+            text-align: center;
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        button {
+            background-color: #1DB954;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #1aa34a;
+        }
+        .release-container {
+            display: none; /* Esconder todas as seções inicialmente */
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+            max-width: 1200px;
+        }
+        .release {
+            border: 1px solid #1DB954;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #282828;
+            text-align: center;
+            width: 200px;
+            transition: transform 0.2s;
+        }
+        .release:hover {
+            transform: scale(1.05);
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        footer {
+            margin-top: auto;
+            padding: 10px;
+            background-color: #1DB954;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Discover Music</h1>
+    <p>Explore Novos Lançamentos e Músicas Top</p>
+</header>
+
+<div class="button-container">
+    <button id="load-new-releases">Novos Lançamentos</button>
+    <button id="load-top-brazil">Top 50 Brasil</button>
+    <button id="load-top-portugal">Top 50 Portugal</button>
+</div>
+
+<div class="release-container" id="new-releases"></div>
+<div class="release-container" id="top-songs-brazil"></div>
+<div class="release-container" id="top-songs-portugal"></div>
+
+<footer>
+    <p>&copy; 2024 Discover Music. Todos os direitos reservados.</p>
+</footer>
+
+<script>
+    const clientId = '981c84ae30214193b366d470c5f91cd4'; // Seu Client ID
+    const clientSecret = '76fb59e2b00543f3a2842e4eb52e2219'; // Seu Client Secret
+
+    async function getAccessToken() {
+        const response = await fetch('https://accounts.spotify.com/api/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
+            },
+            body: 'grant_type=client_credentials'
+        });
+
+        const data = await response.json();
+        return data.access_token;
+    }
+
+    async function getNewReleases() {
+        const accessToken = await getAccessToken();
+
+        const response = await fetch('https://api.spotify.com/v1/browse/new-releases', {
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            }
+        });
+
+        const data = await response.json();
+        return data.albums.items;
+    }
+
+    async function getTopSongs(playlistId) {
+        const accessToken = await getAccessToken();
+
+        const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            }
+        });
+
+        const data = await response.json();
+        return data.items.map(item => item.track);
+    }
+
+    async function displayNewReleases() {
+        const newReleases = await getNewReleases();
+        const container = document.getElementById('new-releases');
+
+        container.innerHTML = '<h2>Novos Lançamentos</h2>'; // Adicionando título
+
+        newReleases.forEach(album => {
+            const releaseDiv = document.createElement('div');
+            releaseDiv.classList.add('release');
+            releaseDiv.innerHTML = `
+                <h3>${album.name}</h3>
+                <p>Artista: ${album.artists[0].name}</p>
+                <img src="${album.images[0].url}" alt="${album.name}" />
+            `;
+            container.appendChild(releaseDiv);
+        });
+
+        toggleVisibility(container);
+    }
+
+    async function displayTopSongs(playlistId, containerId, title) {
+        const topSongs = await getTopSongs(playlistId);
+        const container = document.getElementById(containerId);
+
+        container.innerHTML = `<h2>${title}</h2>`; // Adicionando título
+
+        topSongs.forEach(song => {
+            const songDiv = document.createElement('div');
+            songDiv.classList.add('release');
+            songDiv.innerHTML = `
+                <h3>${song.name}</h3>
+                <p>Artista: ${song.artists.map(artist => artist.name).join(', ')}</p>
+                <img src="${song.album.images[0].url}" alt="${song.name}" />
+            `;
+            container.appendChild(songDiv);
+        });
+
+        toggleVisibility(container);
+    }
+
+    function toggleVisibility(container) {
+        const containers = document.querySelectorAll('.release-container');
+        containers.forEach(c => {
+            if (c !== container) {
+                c.style.display = 'none'; // Esconder outros containers
+            }
+        });
+        container.style.display = container.style.display === 'none' ? 'flex' : 'none'; // Alternar visibilidade
+    }
+
+    document.getElementById('load-new-releases').addEventListener('click', async () => {
+        await displayNewReleases();
+    });
+    
+    document.getElementById('load-top-brazil').addEventListener('click', async () => {
+        await displayTopSongs('37i9dQZEVXbMXbN3EUUhlg', 'top-songs-brazil', 'Top 50 Músicas - Brasil'); // ID da playlist do Spotify para o Brasil
+    });
+    
+    document.getElementById('load-top-portugal').addEventListener('click', async () => {
+        await displayTopSongs('37i9dQZEVXbKyJS56d1pgi', 'top-songs-portugal', 'Top 50 Músicas - Portugal'); // ID da playlist do Spotify para Portugal
+    });
+
+    displayNewReleases(); // Carregar novos lançamentos ao iniciar
+</script>
+
+</body>
+</html>
