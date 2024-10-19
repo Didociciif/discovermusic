@@ -95,11 +95,13 @@
     <button id="load-new-releases">Novos Lançamentos</button>
     <button id="load-top-brazil">Top 50 Brasil</button>
     <button id="load-top-portugal">Top 50 Portugal</button>
+    <button id="load-playlist-discover">Playlist Discover</button> <!-- Novo botão -->
 </div>
 
 <div class="release-container" id="new-releases"></div>
 <div class="release-container" id="top-songs-brazil"></div>
 <div class="release-container" id="top-songs-portugal"></div>
+<div class="release-container" id="playlist-discover"></div> <!-- Nova seção para a playlist -->
 
 <footer>
     <p>&copy; 2024 Discover Music. Todos os direitos reservados.</p>
@@ -189,6 +191,27 @@
         toggleVisibility(container);
     }
 
+    async function displayPlaylistDiscover() {
+        const playlistId = '4NyWA37SoQyawqgL13jC9C'; // ID da sua nova playlist
+        const container = document.getElementById('playlist-discover');
+
+        const topSongs = await getTopSongs(playlistId);
+        container.innerHTML = `<h2>Playlist Discover</h2>`; // Adicionando título
+
+        topSongs.forEach(song => {
+            const songDiv = document.createElement('div');
+            songDiv.classList.add('release');
+            songDiv.innerHTML = `
+                <h3>${song.name}</h3>
+                <p>Artista: ${song.artists.map(artist => artist.name).join(', ')}</p>
+                <img src="${song.album.images[0].url}" alt="${song.name}" />
+            `;
+            container.appendChild(songDiv);
+        });
+
+        toggleVisibility(container);
+    }
+
     function toggleVisibility(container) {
         const containers = document.querySelectorAll('.release-container');
         containers.forEach(c => {
@@ -209,6 +232,10 @@
     
     document.getElementById('load-top-portugal').addEventListener('click', async () => {
         await displayTopSongs('37i9dQZEVXbKyJS56d1pgi', 'top-songs-portugal', 'Top 50 Músicas - Portugal'); // ID da playlist do Spotify para Portugal
+    });
+
+    document.getElementById('load-playlist-discover').addEventListener('click', async () => {
+        await displayPlaylistDiscover(); // Carregar a nova playlist
     });
 
     displayNewReleases(); // Carregar novos lançamentos ao iniciar
