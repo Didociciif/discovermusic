@@ -29,6 +29,7 @@
         .button-container {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap; /* Permitir que os botões quebrem para a próxima linha se necessário */
             margin: 20px 0;
         }
         button {
@@ -36,14 +37,17 @@
             color: white;
             border: none;
             border-radius: 5px;
-            padding: 10px 20px;
+            padding: 15px 25px; /* Aumentar o espaçamento interno */
             cursor: pointer;
-            margin: 0 10px;
+            margin: 10px; /* Espaçamento entre os botões */
             font-size: 1rem;
-            transition: background-color 0.3s;
+            font-weight: bold; /* Aumentar o peso da fonte */
+            transition: background-color 0.3s, transform 0.3s; /* Transição suave para hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adicionar sombra ao botão */
         }
         button:hover {
             background-color: #1aa34a;
+            transform: translateY(-2px); /* Efeito de elevação ao passar o mouse */
         }
         .release-container {
             display: none; /* Esconder todas as seções inicialmente */
@@ -95,13 +99,13 @@
     <button id="load-new-releases">Novos Lançamentos</button>
     <button id="load-top-brazil">Top 50 Brasil</button>
     <button id="load-top-portugal">Top 50 Portugal</button>
-    <button id="load-discover-playlist">Playlist do Discover</button> <!-- Novo botão para a playlist -->
+    <button id="load-discover-playlist">Playlist do Discover</button>
 </div>
 
 <div class="release-container" id="new-releases"></div>
 <div class="release-container" id="top-songs-brazil"></div>
 <div class="release-container" id="top-songs-portugal"></div>
-<div class="release-container" id="discover-playlist"></div> <!-- Container para a playlist -->
+<div class="release-container" id="discover-playlist"></div>
 
 <footer>
     <p>&copy; 2024 Discover Music. Todos os direitos reservados.</p>
