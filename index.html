@@ -14,75 +14,145 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            background-image: url('https://i.imgur.com/f6MQUNH.jpg'); /* Fundo com tema de Halloween */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
+
         header {
             width: 100%;
             padding: 20px;
-            background-color: #1DB954;
+            background-color: #ff7518;
             text-align: center;
             position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
+
         header h1 {
             margin: 0;
-            font-size: 2.5rem;
+            font-size: 3rem;
+            color: #f5f5f5;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
+
+        header p {
+            color: #ffd700;
+            font-size: 1.2rem;
+        }
+
         .button-container {
             display: flex;
-            flex-direction: column; /* Alterado para coluna */
+            flex-direction: column;
             justify-content: center;
             margin: 20px 0;
         }
+
         button {
-            background-color: #1DB954;
+            background-color: #ff7518;
             color: white;
-            border: none;
-            border-radius: 5px;
+            border: 2px solid #f5f5f5;
+            border-radius: 10px;
             padding: 10px 20px;
             cursor: pointer;
-            margin: 10px 0; /* Alterado para ter margens verticais */
-            font-size: 1rem;
-            transition: background-color 0.3s;
-            width: 200px; /* Ajusta a largura para ficarem alinhados */
+            margin: 10px 0;
+            font-size: 1.1rem;
+            transition: background-color 0.3s, transform 0.2s;
+            width: 250px;
         }
+
         button:hover {
-            background-color: #1aa34a;
+            background-color: #e35d00;
+            transform: scale(1.05);
         }
+
         .release-container {
-            display: none; /* Esconder todas as seções inicialmente */
+            display: none;
             flex-wrap: wrap;
             justify-content: center;
             padding: 20px;
             max-width: 1200px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
         }
+
         .release {
-            border: 1px solid #1DB954;
+            border: 1px solid #ff7518;
             margin: 10px;
             padding: 10px;
             border-radius: 8px;
             background-color: #282828;
             text-align: center;
             width: 200px;
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
+
         .release:hover {
             transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(255, 117, 24, 0.8);
         }
+
         img {
             max-width: 100%;
             height: auto;
             border-radius: 5px;
         }
+
         footer {
             margin-top: auto;
             padding: 10px;
-            background-color: #1DB954;
+            background-color: #ff7518;
             width: 100%;
             text-align: center;
+            color: #f5f5f5;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
         }
+
+        footer p {
+            margin: 0;
+        }
+
         h2 {
             text-align: center;
             margin-top: 20px;
             font-size: 1.5rem;
+            color: #ffd700;
+        }
+
+        /* Efeitos Halloween */
+        body:before {
+            content: '🎃';
+            position: fixed;
+            left: -50px;
+            top: 50%;
+            font-size: 100px;
+            color: #ff7518;
+            animation: floating 4s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        body:after {
+            content: '👻';
+            position: fixed;
+            right: -50px;
+            top: 40%;
+            font-size: 100px;
+            color: #ffd700;
+            animation: floating 6s ease-in-out infinite reverse;
+            opacity: 0.7;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(-10px);
+            }
+            50% {
+                transform: translateY(10px);
+            }
+            100% {
+                transform: translateY(-10px);
+            }
         }
     </style>
 </head>
@@ -204,29 +274,17 @@
         const containers = document.querySelectorAll('.release-container');
         containers.forEach(c => {
             if (c !== container) {
-                c.style.display = 'none'; // Esconder outros containers
+                c.style.display = 'none';
             }
         });
-        container.style.display = container.style.display === 'none' ? 'flex' : 'none'; // Alternar visibilidade
+
+        container.style.display = container.style.display === 'flex' ? 'none' : 'flex';
     }
 
-    document.getElementById('load-new-releases').addEventListener('click', async () => {
-        await displayNewReleases();
-    });
-    
-    document.getElementById('load-top-brazil').addEventListener('click', async () => {
-        await displayTopSongs('37i9dQZEVXbMXbN3EUUhlg', 'top-songs-brazil', 'Top 50 Músicas - Brasil'); // ID da playlist do Spotify para o Brasil
-    });
-    
-    document.getElementById('load-top-portugal').addEventListener('click', async () => {
-        await displayTopSongs('37i9dQZEVXbKyJS56d1pgi', 'top-songs-portugal', 'Top 50 Músicas - Portugal'); // ID da playlist do Spotify para Portugal
-    });
-
-    document.getElementById('load-discover-playlist').addEventListener('click', async () => {
-        await displayDiscoverPlaylist();
-    });
-
-    displayNewReleases(); // Carregar novos lançamentos ao iniciar
+    document.getElementById('load-new-releases').addEventListener('click', displayNewReleases);
+    document.getElementById('load-top-brazil').addEventListener('click', () => displayTopSongs('37i9dQZEVXbMXbN3EUUhlg', 'top-songs-brazil', 'Top 50 Brasil'));
+    document.getElementById('load-top-portugal').addEventListener('click', () => displayTopSongs('37i9dQZEVXbKyJS56d1pgi', 'top-songs-portugal', 'Top 50 Portugal'));
+    document.getElementById('load-discover-playlist').addEventListener('click', displayDiscoverPlaylist);
 </script>
 
 </body>
