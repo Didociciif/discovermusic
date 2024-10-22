@@ -120,40 +120,6 @@
             color: #ffd700;
         }
 
-        /* Efeitos Halloween */
-        body:before {
-            content: '🎃';
-            position: fixed;
-            left: -50px;
-            top: 50%;
-            font-size: 100px;
-            color: #ff7518;
-            animation: floating 4s ease-in-out infinite;
-            opacity: 0.7;
-        }
-
-        body:after {
-            content: '👻'; position: fixed;
-            right: -50px;
-            top: 40%;
-            font-size: 100px;
-            color: #ffd700;
-            animation: floating 6s ease-in-out infinite reverse;
-            opacity: 0.7;
-        }
-
-        @keyframes floating {
-            0% {
-                transform: translateY(-10px);
-            }
-            50% {
-                transform: translateY(10px);
-            }
-            100% {
-                transform: translateY(-10px);
-            }
-        }
-
         .novidades {
             display: none;
             background-color: rgba(255, 117, 24, 0.8);
@@ -176,7 +142,7 @@
     <button id="load-top-brazil">Top 50 Brasil</button>
     <button id="load-top-portugal">Top 50 Portugal</button>
     <button id="load-discover-playlist">Discover</button>
-    <button id="show-novidades">Recrutamento On!</button> <!-- Botão de recrutamento -->
+    <button id="recrutamento">Recrutamento On!</button> <!-- Novo botão de recrutamento -->
 </div>
 
 <div class="release-container" id="new-releases"></div>
@@ -186,7 +152,7 @@
 
 <div class="novidades" id="novidades">
     <h2>Novidades</h2>
-    <p>Estamos a recrutar agentes para chat! 💬 Pagamos 1 euro por chat. Mande já sua candidatura!!</p>
+    <p>Estamos a recrutar agentes para chat! 💬 Pagamos 1 euro por chat. <a href="https://forms.gle/kzYntnDWawPdWmRM9" target="_blank">Mande já sua candidatura!</a></p>
 </div>
 
 <footer>
@@ -268,7 +234,7 @@
             releaseDiv.classList.add('release');
             releaseDiv.innerHTML = `
                 <h3>${track.name}</h3>
-                <p>Artista: ${<p>Artista: ${track.artists.map(artist => artist.name).join(', ')}</p>
+                <p>Artista: ${track.artists.map(artist => artist.name).join(', ')}</p>
                 <img src="${track.album.images[0].url}" alt="${track.name}" />`;
             container.appendChild(releaseDiv);
         });
@@ -279,24 +245,34 @@
     function toggleVisibility(container) {
         const allContainers = document.querySelectorAll('.release-container');
         allContainers.forEach(cont => {
-            if (cont !== container) {
-                cont.style.display = 'none'; // Esconde outros containers
-            }
+            cont.style.display = 'none'; // Esconde todos os containers
         });
         container.style.display = 'flex'; // Mostra o container atual
     }
 
     document.getElementById('load-new-releases').addEventListener('click', displayNewReleases);
-    document.getElementById('load-top-brazil').addEventListener('click', () => displayTopSongs('37i9dQZEVXbLRJz8Z8LQpb', 'top-songs-brazil', 'Top 50 Brasil'));
-    document.getElementById('load-top-portugal').addEventListener('click', () => displayTopSongs('37i9dQZEVXbLRJz8Z8LQpb', 'top-songs-portugal', 'Top 50 Portugal'));
-    document.getElementById('load-discover-playlist').addEventListener('click', () => displayTopSongs('37i9dQZEVXbJ5yZ4XrV8Np', 'discover-playlist', 'Discover Playlist'));
-    
-    // Exibir novidades
-    document.getElementById('show-novidades').addEventListener('click', () => {
-        const novidadesDiv = document.getElementById('novidades');
-        novidadesDiv.style.display = novidadesDiv.style.display === 'block' ? 'none' : 'block'; // Alterna a visibilidade
+    document.getElementById('load-top-brazil').addEventListener('click', () => displayTopSongs('37i9dQZEVXbMXbN3EUUhlg', 'top-songs-brazil', 'Top 50// Brasil
+    document.getElementById('load-top-brazil').addEventListener('click', () => 
+        displayTopSongs('37i9dQZEVXbMXbN3EUUhlg', 'top-songs-brazil', 'Top 50 Brasil')
+    );
+
+    // Portugal
+    document.getElementById('load-top-portugal').addEventListener('click', () => 
+        displayTopSongs('37i9dQZEVXbMMycG6H5iPY', 'top-songs-portugal', 'Top 50 Portugal')
+    );
+
+    // Discover Playlist
+    document.getElementById('load-discover-playlist').addEventListener('click', () => 
+        displayTopSongs('37i9dQZEVXbK8G6W1U4aiF', 'discover-playlist', 'Discover')
+    );
+
+    // Recrutamento
+    document.getElementById('recrutamento').addEventListener('click', () => {
+        const novidadesContainer = document.getElementById('novidades');
+        novidadesContainer.style.display = 'block'; // Mostra a seção de novidades
     });
 
 </script>
+
 </body>
 </html>
