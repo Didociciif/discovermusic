@@ -250,29 +250,25 @@
         container.style.display = 'flex'; // Mostra o container atual
     }
 
+    // Botão de novos lançamentos
     document.getElementById('load-new-releases').addEventListener('click', displayNewReleases);
-    document.getElementById('load-top-brazil').addEventListener('click', () => displayTopSongs('37i9dQZEVXbMXbN3EUUhlg', 'top-songs-brazil', 'Top 50// Brasil
-    document.getElementById('load-top-brazil').addEventListener('click', () => 
-        displayTopSongs('37i9dQZEVXbMXbN3EUUhlg', 'top-songs-brazil', 'Top 50 Brasil')
-    );
 
-    // Portugal
-    document.getElementById('load-top-portugal').addEventListener('click', () => 
-        displayTopSongs('37i9dQZEVXbMMycG6H5iPY', 'top-songs-portugal', 'Top 50 Portugal')
-    );
+    // Botão de top Brasil
+    document.getElementById('load-top-brazil').addEventListener('click', () => displayTopSongs('37i9dQZEVXbMXbN3EUUhlg', 'top-songs-brazil', 'Top 50 Brasil'));
 
-    // Discover Playlist
-    document.getElementById('load-discover-playlist').addEventListener('click', () => 
-        displayTopSongs('37i9dQZEVXbK8G6W1U4aiF', 'discover-playlist', 'Discover')
-    );
+    // Botão de top Portugal
+    document.getElementById('load-top-portugal').addEventListener('click', () => displayTopSongs('37i9dQZEVXbKyJS56d1pgi', 'top-songs-portugal', 'Top 50 Portugal'));
 
-    // Recrutamento
+    // Botão da Discover Playlist
+    document.getElementById('load-discover-playlist').addEventListener('click', () => displayTopSongs('37i9dQZF1DX9EM98aZosoy', 'discover-playlist', 'Discover Playlist'));
+
+    // Botão de Recrutamento
     document.getElementById('recrutamento').addEventListener('click', () => {
         const novidadesContainer = document.getElementById('novidades');
         novidadesContainer.style.display = 'block'; // Mostra a seção de novidades
     });
-
 </script>
 
 </body>
 </html>
+
