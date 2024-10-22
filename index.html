@@ -133,8 +133,7 @@
         }
 
         body:after {
-            content: '👻';
-            position: fixed;
+            content: '👻';position: fixed;
             right: -50px;
             top: 40%;
             font-size: 100px;
@@ -154,6 +153,15 @@
                 transform: translateY(-10px);
             }
         }
+
+        .novidades {
+            display: none;
+            background-color: rgba(255, 117, 24, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
@@ -168,12 +176,19 @@
     <button id="load-top-brazil">Top 50 Brasil</button>
     <button id="load-top-portugal">Top 50 Portugal</button>
     <button id="load-discover-playlist">Discover</button>
+    <button onclick="window.location.href='https://forms.gle/kzYntnDWawPdWmRM9'">Recrutamento On!</button> <!-- Botão de Recrutamento -->
 </div>
 
 <div class="release-container" id="new-releases"></div>
 <div class="release-container" id="top-songs-brazil"></div>
 <div class="release-container" id="top-songs-portugal"></div>
 <div class="release-container" id="discover-playlist"></div>
+
+<!-- Nova aba Novidades -->
+<div class="novidades" id="novidades">
+    <h2>Novidades</h2>
+    <p>Estamos a recrutar agentes para chat! 💬 Pagamos 1 euro por chat. Mande já sua candidatura!!</p>
+</div>
 
 <footer>
     <p>&copy; 2024 Discover Music. Todos os direitos reservados.</p>
@@ -231,36 +246,14 @@
         const container = document.getElementById('new-releases');
 
         container.innerHTML = '<h2>Novos Lançamentos</h2>'; // Adicionando título
-
         newReleases.forEach(album => {
             const releaseDiv = document.createElement('div');
             releaseDiv.classList.add('release');
             releaseDiv.innerHTML = `
                 <h3>${album.name}</h3>
                 <p>Artista: ${album.artists[0].name}</p>
-                <img src="${album.images[0].url}" alt="${album.name}" />
-            `;
+                <img src="${album.images[0].url}" alt="${album.name}" />`;
             container.appendChild(releaseDiv);
-        });
-
-        toggleVisibility(container);
-    }
-
-    async function displayTopSongs(playlistId, containerId, title) {
-        const topSongs = await getTopSongs(playlistId);
-        const container = document.getElementById(containerId);
-
-        container.innerHTML = `<h2>${title}</h2>`; // Adicionando título
-
-        topSongs.forEach(song => {
-            const songDiv = document.createElement('div');
-            songDiv.classList.add('release');
-            songDiv.innerHTML = `
-                <h3>${song.name}</h3>
-                <p>Artista: ${song.artists.map(artist => artist.name).join(', ')}</p>
-                <img src="${song.album.images[0].url}" alt="${song.name}" />
-            `;
-            container.appendChild(songDiv);
         });
 
         toggleVisibility(container);
@@ -274,7 +267,7 @@
         const containers = document.querySelectorAll('.release-container');
         containers.forEach(c => {
             if (c !== container) {
-                c.style.display = 'none';
+                c.style.display = 'none';c.style.display = 'none';
             }
         });
 
@@ -285,6 +278,19 @@
     document.getElementById('load-top-brazil').addEventListener('click', () => displayTopSongs('37i9dQZEVXbMXbN3EUUhlg', 'top-songs-brazil', 'Top 50 Brasil'));
     document.getElementById('load-top-portugal').addEventListener('click', () => displayTopSongs('37i9dQZEVXbKyJS56d1pgi', 'top-songs-portugal', 'Top 50 Portugal'));
     document.getElementById('load-discover-playlist').addEventListener('click', displayDiscoverPlaylist);
+
+    // Função para exibir a aba "Novidades"
+    function toggleNovidades() {
+        const novidadesContainer = document.getElementById('novidades');
+        novidadesContainer.style.display = novidadesContainer.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Adicionar um botão para a aba "Novidades"
+    const novidadesButton = document.createElement('button');
+    novidadesButton.innerText = 'Mostrar Novidades';
+    novidadesButton.onclick = toggleNovidades;
+    document.querySelector('.button-container').appendChild(novidadesButton);
+
 </script>
 
 </body>
