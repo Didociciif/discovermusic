@@ -176,7 +176,7 @@
     <button id="load-top-brazil">Top 50 Brasil</button>
     <button id="load-top-portugal">Top 50 Portugal</button>
     <button id="load-discover-playlist">Discover</button>
-    <button onclick="window.location.href='https://forms.gle/kzYntnDWawPdWmRM9'">Recrutamento On!</button>
+    <button id="show-novidades">Recrutamento On!</button> <!-- Botão de recrutamento -->
 </div>
 
 <div class="release-container" id="new-releases"></div>
@@ -264,11 +264,11 @@
 
         container.innerHTML = `<h2>${title}</h2>`; // Adicionando título
         topSongs.forEach(track => {
-            const releaseDiv = document.createonst releaseDiv = document.createElement('div');
+            const releaseDiv = document.createElement('div');
             releaseDiv.classList.add('release');
             releaseDiv.innerHTML = `
                 <h3>${track.name}</h3>
-                <p>Artista: ${track.artists.map(artist => artist.name).join(', ')}</p>
+                <p>Artista: ${<p>Artista: ${track.artists.map(artist => artist.name).join(', ')}</p>
                 <img src="${track.album.images[0].url}" alt="${track.name}" />`;
             container.appendChild(releaseDiv);
         });
@@ -277,24 +277,26 @@
     }
 
     function toggleVisibility(container) {
-        const containers = document.querySelectorAll('.release-container');
-        containers.forEach(c => {
-            c.style.display = 'none';
+        const allContainers = document.querySelectorAll('.release-container');
+        allContainers.forEach(cont => {
+            if (cont !== container) {
+                cont.style.display = 'none'; // Esconde outros containers
+            }
         });
-        container.style.display = 'flex'; // Exibir apenas o container atual
+        container.style.display = 'flex'; // Mostra o container atual
     }
 
     document.getElementById('load-new-releases').addEventListener('click', displayNewReleases);
-    document.getElementById('load-top-brazil').addEventListener('click', () => {
-        displayTopSongs('37i9dQZEVXbMXbN3EUUhlg', 'top-songs-brazil', 'Top 50 Brasil');
+    document.getElementById('load-top-brazil').addEventListener('click', () => displayTopSongs('37i9dQZEVXbLRJz8Z8LQpb', 'top-songs-brazil', 'Top 50 Brasil'));
+    document.getElementById('load-top-portugal').addEventListener('click', () => displayTopSongs('37i9dQZEVXbLRJz8Z8LQpb', 'top-songs-portugal', 'Top 50 Portugal'));
+    document.getElementById('load-discover-playlist').addEventListener('click', () => displayTopSongs('37i9dQZEVXbJ5yZ4XrV8Np', 'discover-playlist', 'Discover Playlist'));
+    
+    // Exibir novidades
+    document.getElementById('show-novidades').addEventListener('click', () => {
+        const novidadesDiv = document.getElementById('novidades');
+        novidadesDiv.style.display = novidadesDiv.style.display === 'block' ? 'none' : 'block'; // Alterna a visibilidade
     });
-    document.getElementById('load-top-portugal').addEventListener('click', () => {
-        displayTopSongs('37i9dQZEVXbKyJS56d1pgi', 'top-songs-portugal', 'Top 50 Portugal');
-    });
-    document.getElementById('load-discover-playlist').addEventListener('click', () => {
-        displayTopSongs('29QayhILX3Bac2h2csj5e3', 'discover-playlist', 'Discover');
-    });
-</script>
 
+</script>
 </body>
 </html>
