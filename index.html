@@ -269,7 +269,30 @@ aviso-> ⚠️ suporte ao cliente indisponivel estamos a atualizar nosso suporte
         const novidadesContainer = document.getElementById('novidades');
         novidadesContainer.style.display = 'block'; // Mostra a seção de novidades
     });
+</script><!-- Seu conteúdo HTML atual vai aqui -->
+
+<script>
+  async function verificarLocalizacao() {
+    try {
+      // Faz a requisição à API ipapi com sua chave
+      const response = await fetch('https://api.ipapi.com/api/check?access_key=a3df354fc2cbe963efb26c7c973bf1a7');
+      const data = await response.json();
+
+      // Verifica se o país é o Brasil (BR)
+      if (data.country_code === 'BR') {
+        // Exibe uma mensagem e bloqueia o conteúdo se o usuário estiver no Brasil
+        document.body.innerHTML = '<h1>Neste momento, não estamos disponíveis no seu país.</h1>';
+      }
+    } catch (error) {
+      console.error('Erro ao verificar a localização:', error);
+    }
+  }
+
+  // Chama a função de verificação quando a página é carregada
+  verificarLocalizacao();
 </script>
+
+<!-- Mais conteúdo do seu site aqui -->
 
 </body>
 </html>
