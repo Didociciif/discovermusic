@@ -3,49 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discover Music - Parceria Netflix</title>
+    <title>Discover Music - Novos Lançamentos</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-        
-        body {
-            font-family: 'Bebas Neue', sans-serif;
-            background-color: #141414;
-            color: #fff;
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #141414;
+            color: white;
             display: flex;
             flex-direction: column;
             align-items: center;
-            background-image: url('https://i.imgur.com/zK6KxKn.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            justify-content: flex-start;
+            min-height: 100vh;
         }
 
         header {
-            width: 100%;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.8);
             text-align: center;
-            position: relative;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            background-color: #e50914;
+            width: 100%;
         }
 
-        header h1 {
+        h1 {
+            font-size: 3em;
+            font-weight: bold;
+            letter-spacing: 2px;
             margin: 0;
-            font-size: 4rem;
-            color: #e50914;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            color: white;
         }
 
-        header p {
-            color: #b3b3b3;
-            font-size: 1.5rem;
+        p {
+            font-size: 1.2em;
+            margin-top: 10px;
         }
 
         .button-container {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             margin: 20px 0;
         }
@@ -54,82 +52,68 @@
             background-color: #e50914;
             color: white;
             border: none;
+            padding: 15px 25px;
+            margin: 0 10px;
             border-radius: 5px;
-            padding: 15px 30px;
             cursor: pointer;
-            margin: 10px 0;
-            font-size: 1.2rem;
-            transition: background-color 0.3s, transform 0.2s;
-            width: 300px;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s;
         }
 
         button:hover {
-            background-color: #f40612;
+            background-color: #f6122e;
             transform: scale(1.05);
         }
 
         .release-container {
             display: none;
-            flex-wrap: wrap;
-            justify-content: center;
             padding: 20px;
+            width: 80%;
             max-width: 1200px;
-            background-color: rgba(0, 0, 0, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
         }
 
         .release {
-            border: 2px solid #e50914;
+            background-color: #1c1c1c;
             margin: 10px;
-            padding: 10px;
-            border-radius: 8px;
-            background-color: #222;
-            text-align: center;
-            width: 200px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .release:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(229, 9, 20, 0.8);
-        }
-
-        img {
-            max-width: 100%;
+        .release img {
+            width: 100%;
             height: auto;
             border-radius: 5px;
         }
 
-        footer {
-            margin-top: auto;
-            padding: 10px;
-            background-color: #e50914;
-            width: 100%;
+        .novidades {
+            display: none;
+            background-color: #1c1c1c;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
             text-align: center;
-            color: #f5f5f5;
-            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #141414;
+            width: 100%;
+            position: relative;
+            bottom: 0;
         }
 
         footer p {
             margin: 0;
+            font-size: 0.9em;
         }
 
-        h2 {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 2rem;
+        a {
             color: #e50914;
-        }
-
-        .novidades {
-            display: none;
-            background-color: rgba(229, 9, 20, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            margin: 20px 0;
-            color: white;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -137,7 +121,7 @@
 
 <header>
     <h1>Discover Music</h1>
-    <p>Explore Novos Lançamentos em Parceria com Netflix</p>
+    <p>Explore Novos Lançamentos e Músicas Top</p>
 </header>
 
 <div class="button-container">
@@ -159,7 +143,7 @@
 </div>
 
 <footer>
-    <p>&copy; 2024 Discover Music. Parceria com Netflix. Todos os direitos reservados.</p>
+    <p>&copy; 2024 Discover Music. Todos os direitos reservados.</p>
 </footer>
 
 <!-- JivoChat Script -->
@@ -213,7 +197,7 @@
         const newReleases = await getNewReleases();
         const container = document.getElementById('new-releases');
 
-        container.innerHTML = '<h2>Novos Lançamentos</h2>'; // Adicionando título
+        container.innerHTML = '<h2>Novos Lançamentos</h2>';
         newReleases.forEach(album => {
             const releaseDiv = document.createElement('div');
             releaseDiv.classList.add('release');
@@ -231,7 +215,7 @@
         const topSongs = await getTopSongs(playlistId);
         const container = document.getElementById(containerId);
 
-        container.innerHTML = `<h2>${title}</h2>`; // Adicionando título
+        container.innerHTML = `<h2>${title}</h2>`;
         topSongs.forEach(track => {
             const releaseDiv = document.createElement('div');
             releaseDiv.classList.add('release');
@@ -248,33 +232,27 @@
     function toggleVisibility(container) {
         const allContainers = document.querySelectorAll('.release-container');
         allContainers.forEach(cont => {
-            cont.style.display = 'none'; // Esconde todos os containers
+            cont.style.display = 'none';
         });
-        container.style.display = 'flex'; // Mostra o container atual
+        container.style.display = 'flex';
     }
 
     // Botão de novos lançamentos
     document.getElementById('load-new-releases').addEventListener('click', displayNewReleases);
 
     // Botão de top Brasil
-    document.getElementById('load-top-brazil').addEventListener('click', () => {
-        displayTopSongs('37i9dQZEVXbMXbN3EUUhlg', 'top-songs-brazil', 'Top 50 Brasil');
-    });
+    document.getElementById('load-top-brazil').addEventListener('click', () => displayTopSongs('37i9dQZEVXbMXbN3EUUhlg', 'top-songs-brazil', 'Top 50 Brasil'));
 
     // Botão de top Portugal
-    document.getElementById('load-top-portugal').addEventListener('click', () => {
-        displayTopSongs('37i9dQZEVXbKyJS56d1pgi', 'top-songs-portugal', 'Top 50 Portugal');
-    });
+    document.getElementById('load-top-portugal').addEventListener('click', () => displayTopSongs('37i9dQZEVXbKyJS56d1pgi', 'top-songs-portugal', 'Top 50 Portugal'));
 
     // Botão da Discover Playlist
-document.getElementById('load-discover-playlist').addEventListener('click', () => displayTopSongs('29QayhILX3Bac2h2csj5e3', 'discover-playlist', 'Discover Playlist'));
-;
-
-    });
+    document.getElementById('load-discover-playlist').addEventListener('click', () => displayTopSongs('29QayhILX3Bac2h2csj5e3', 'discover-playlist', 'Discover Playlist'));
 
     // Botão de Recrutamento
     document.getElementById('recrutamento').addEventListener('click', () => {
-        document.getElementById('novidades').style.display = 'block';
+        const novidadesContainer = document.getElementById('novidades');
+        novidadesContainer.style.display = 'block';
     });
 </script>
 
